@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Set default values if not already set
+: ${SAFE_BATTERY_LEVEL:=30}
+: ${NOTIF_TIMEOUT:=3000}
+: ${FULL_BATTERY_LEVEL:=80}
+: ${LOW_BATTERY_SOUND:="$HOME/sounds/low_battery.mp3"}
+: ${FULL_BATTERY_SOUND:="$HOME/sounds/battery_charged.mp3"}
+
+# Get battery information using acpi
+battery_info=$(/usr/bin/acpi -b)
+# Extract the last line containing 'Charging' or 'Discharging'
+last_battery_line=$(echo "$battery_info" | grep -E 'Charging|Discharging' | tail -n 1)
+# Extract battery status and level
+state=$(echo "$last_battery_line" | grep -oE 'Charging|Discharging')
+percentage=$(echo "$last_battery_line" | grep -oE '[0-9]+%' | tr -d '%')
+
+notify() {
+    local urgency="$1"
+    local title="$2"
+    local message="$3"
+    local sound_file="$4"
+    local log_file="/tmp/battery-notification.log"
+    notify-send -t "$NOTIF_TIMEOUT" -u "$urgency" "$title" "$message"
+    
+    if [ -f "$sound_file" ]; then
+        if command -v paplay &> /dev/null; then
+            paplay "$sound_file" >> "$log_file" 2>&1  
+        else
+            echo "paplay command not found. Unable to play sound."
+        fi
+    else
+        echo "Sound file not found: $sound_file"
+    fi
+}
+
+# Check battery conditions and notify accordingly
+if [[ $percentage -lt $SAFE_BATTERY_LEVEL && $state == "Discharging" ]]; then
+    notify "critical" "Battery level critical!" "Connect Charger<br />Battery level is at $percentage%" "$LOW_BATTERY_SOUND"
+elif [[ $percentage -ge $FULL_BATTERY_LEVEL && $state == "Charging" ]]; then
+    notify "normal" "Battery Fully Charged" "You can unplug the charger<br />Battery level is at $percentage%" "$FULL_BATTERY_SOUND"
+fi
