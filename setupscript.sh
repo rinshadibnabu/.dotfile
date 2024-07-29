@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Colors for output
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -25,7 +24,6 @@ mkdir -p $HOME/wallpaper
 create_symlink() {
   local source="$1"
   local target="$2"
-
   if [ -e "$source" ]; then
     if [ -e "$target" ]; then
       if [ -L "$target" ]; then
@@ -50,11 +48,14 @@ create_symlink "$(pwd)/htop/htoprc" "$HOME/.config/htop/htoprc"
 create_symlink "$(pwd)/i3/config" "$HOME/.config/i3/config"
 create_symlink "$(pwd)/picom/picom.conf" "$HOME/.config/picom/picom.conf"
 create_symlink "$(pwd)/rofi/config.rasi" "$HOME/.config/rofi/config.rasi"
+create_symlink "$(pwd)/nvim" "$HOME/.config/nvim"
 
 # Copy scripts
 print_status "Creating/updating symlinks for scripts..."
 create_symlink "$(pwd)/battery-notification/battery" "$HOME/.local/bin/battery"
-create_symlink "$(pwd)/scripts/git-setup.sh" "$HOME/scripts/git-setup.sh"print_status "Copying wallpaper..."
+create_symlink "$(pwd)/scripts/git-setup.sh" "$HOME/scripts/git-setup.sh"
+
+print_status "Copying wallpaper..."
 cp -p wallpaper/wallpaper.jpg $HOME/wallpaper/
 
 # Set correct permissions
