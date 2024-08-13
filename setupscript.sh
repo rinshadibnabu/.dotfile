@@ -53,7 +53,8 @@ create_symlink "$(pwd)/nvim" "$HOME/.config/nvim"
 # Copy scripts
 print_status "Creating/updating symlinks for scripts..."
 create_symlink "$(pwd)/battery-notification/battery" "$HOME/.local/bin/battery"
-create_symlink "$(pwd)/scripts/git-setup.sh" "$HOME/scripts/git-setup.sh"
+create_symlink "$(pwd)/scripts/ssh-keygen.sh" "$HOME/scripts/ssh-keygen.sh"
+create_symlink "$(pwd)/.gitconfig" "$HOME/.gitconfig"
 
 print_status "Copying wallpaper..."
 cp -p wallpaper/wallpaper.jpg $HOME/wallpaper/
@@ -61,7 +62,7 @@ cp -p wallpaper/wallpaper.jpg $HOME/wallpaper/
 # Set correct permissions
 print_status "Setting permissions..."
 chmod u+x $HOME/.local/bin/battery
-chmod u+x $HOME/scripts/git-setup.sh
+chmod u+x $HOME/scripts/ssh-keygen.sh
 
 # Reload systemd
 print_status "Reloading systemd..."
@@ -73,8 +74,8 @@ systemctl --user enable battery-notification.timer
 systemctl --user start battery-notification.timer
 
 # Setup git (assuming git-setup.sh contains git configurations)
-print_status "Setting up git..."
-$HOME/scripts/git-setup.sh
+print_status "ssh key generation"
+$HOME/scripts/ssh-keygen.sh
 
 # Check if required packages are installed
 print_status "Checking required packages..."

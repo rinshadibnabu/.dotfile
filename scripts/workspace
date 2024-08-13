@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Define the log file
+LOG_FILE="/tmp/i3.log"
+
+# Clear the log file if it already exists
+>$LOG_FILE
+
+# Function to log commands and their output
+log_command() {
+  echo "Executing: $1" >>$LOG_FILE
+  eval "$1" >>$LOG_FILE 2>&1
+  echo "Command finished with exit code: $?" >>$LOG_FILE
+  echo "-----------------------" >>$LOG_FILE
+}
+
+# Execute commands and log their output
+log_command "i3-msg 'workspace 6; exec firefox'"
+sleep 0.3
+log_command "i3-msg 'workspace 7; exec alacritty -e bash -c \"cd ~/projects/class-time-projects\"'"
+sleep 0.3
+log_command "i3-msg 'workspace 8; exec alacritty -e bash -c \"cd ~/projects/class-time-projects\"'"
+sleep 0.3
+log_command "i3-msg 'workspace 9; exec firefox'"
+sleep 0.3
+log_command "i3-msg 'workspace 10; exec alacritty'"
+sleep 0.3
+log_command "i3-msg 'workspace 1; exec firefox'"
