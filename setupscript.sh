@@ -42,7 +42,6 @@ create_symlink() {
   fi
 }
 
-# Copy configuration files
 print_status "Creating/updating symlinks for configuration files..."
 create_symlink "$(pwd)/htop/htoprc" "$HOME/.config/htop/htoprc"
 create_symlink "$(pwd)/i3/config" "$HOME/.config/i3/config"
@@ -50,34 +49,30 @@ create_symlink "$(pwd)/picom/picom.conf" "$HOME/.config/picom/picom.conf"
 create_symlink "$(pwd)/rofi/config.rasi" "$HOME/.config/rofi/config.rasi"
 create_symlink "$(pwd)/nvim" "$HOME/.config/nvim"
 
-# Copy scripts
 print_status "Creating/updating symlinks for scripts..."
 create_symlink "$(pwd)/battery-notification/battery" "$HOME/.local/bin/battery"
 create_symlink "$(pwd)/scripts/ssh-keygen.sh" "$HOME/scripts/ssh-keygen.sh"
 create_symlink "$(pwd)/.gitconfig" "$HOME/.gitconfig"
+create_symlink "$(pwd)/scripts/rttd" "$HOME/.local/bin"
+create_symlink "$(pwd)/scripts/40-touch-pad" "/etc/X11/xorg.conf.d/"
 
 print_status "Copying wallpaper..."
 cp -p wallpaper/wallpaper.jpg $HOME/wallpaper/
 
-# Set correct permissions
 print_status "Setting permissions..."
 chmod u+x $HOME/.local/bin/battery
 chmod u+x $HOME/scripts/ssh-keygen.sh
 
-# Reload systemd
 print_status "Reloading systemd..."
 sudo systemctl daemon-reload
 
-# Enable and start the battery notification timer
 print_status "Enabling and starting the battery notification timer..."
 systemctl --user enable battery-notification.timer
 systemctl --user start battery-notification.timer
 
-# Setup git (assuming git-setup.sh contains git configurations)
 print_status "ssh key generation"
 $HOME/scripts/ssh-keygen.sh
 
-# Check if required packages are installed
 print_status "Checking required packages..."
 packages=("i3" "picom" "rofi" "htop" "neovim")
 for package in "${packages[@]}"; do
