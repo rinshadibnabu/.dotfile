@@ -6,3 +6,5 @@
     a    = !git add . && git status
     au   = !git add -u . && git status
     aa   = !git add . && git add -u . && git status
+[core]
+	editor = nvim

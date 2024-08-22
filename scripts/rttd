@@ -1,0 +1,97 @@
+#!/bin/bash
+
+/bin/npm create vite@latest frontend -- --template react-ts >/tmp/new.log || {
+  echo "Failed to create Vite project"
+  exit 1
+}
+cd frontend || {
+  echo "Failed to enter frontend directory"
+  exit 1
+}
+
+/bin/npm install || {
+  echo "npm install failed"
+  exit 1
+}
+npm install -D tailwindcss postcss autoprefixer || {
+  echo "Failed to install Tailwind CSS and dependencies"
+  exit 1
+}
+npm install react-router-dom || {
+  echo "Failed to install react-router-dom"
+  exit 1
+}
+
+mkdir src/pages src/components || {
+  echo "Failed to create directories"
+  exit 1
+}
+
+npx tailwindcss init -p || {
+  echo "Failed to initialize Tailwind CSS"
+  exit 1
+}
+
+cat >tailwind.config.js <<EOL
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+EOL
+
+cat >src/pages/SignIn.tsx <<EOL
+export const SignIn = () => {
+  return (
+    <div></div>
+  )
+}
+EOL
+
+cat >src/pages/SignUp.tsx <<EOL
+export const SignUp = () => {
+  return (
+    <div></div>
+  )
+}
+EOL
+
+mkdir -p src || {
+  echo "Failed to create src directory"
+  exit 1
+}
+cat >src/index.css <<EOL
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+EOL
+
+cat >src/App.tsx <<EOL
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { SignUp } from './pages/SignUp'
+import { SignIn } from './pages/SignIn'
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+
+export default App
+EOL
+
+echo "Project setup complete. To start your development server, run:"
+echo "cd frontend && npm run dev"
