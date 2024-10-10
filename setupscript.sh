@@ -54,8 +54,9 @@ create_symlink "$(pwd)/battery-notification/battery" "$HOME/.local/bin/battery"
 create_symlink "$(pwd)/scripts/ssh-keygen.sh" "$HOME/scripts/ssh-keygen.sh"
 create_symlink "$(pwd)/.gitconfig" "$HOME/.gitconfig"
 create_symlink "$(pwd)/scripts/rttd" "$HOME/.local/bin"
-create_symlink "$(pwd)/scripts/40-touch-pad" "/etc/X11/xorg.conf.d/"
-
+create_symlink "$(pwd)/scripts/40-touch-pad.conf" "/etc/X11/xorg.conf.d/"
+create_symlink "$(pwd)/scripts/rttd" "$HOME/.local/bin"
+create_symlink "$(pwd)/.bashrc" "$HOME"
 print_status "Copying wallpaper..."
 cp -p wallpaper/wallpaper.jpg $HOME/wallpaper/
 
@@ -73,6 +74,7 @@ systemctl --user start battery-notification.timer
 print_status "ssh key generation"
 $HOME/scripts/ssh-keygen.sh
 
+source .bashrc
 print_status "Checking required packages..."
 packages=("i3" "picom" "rofi" "htop" "neovim")
 for package in "${packages[@]}"; do
