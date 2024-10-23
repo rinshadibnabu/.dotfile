@@ -48,11 +48,11 @@ floating_modifier $mod
 
 #start a terminal
 
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec xterm
 # kill focused window
 bindsym $mod+i kill
 
-bindsym $mod+F12 exec --no-startup-id maim ~/Pictures/Screenshots/$(date +%s).png
+bindsym $mod+F12 exec --no-startup-id maim ~/Pictures/Screenshots/$(date +%s).jpg
 
 
 # start dmenu (a program launcher)

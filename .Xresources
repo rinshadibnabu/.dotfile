@@ -1,0 +1,59 @@
+! XTERM NAME
+! !------------------------------------------------
+XTerm.termName: xterm-256color
+
+! XTERM Window size
+! !------------------------------------------------
+XTerm.vt100.geometry: 130x50 
+
+! XTERM COLORS & FONTS
+! !------------------------------------------------
+XTerm.vt100.foreground: white
+XTerm.vt100.background: rgb:14/14/14
+XTerm.vt100.color0: rgb:28/28/28
+XTerm.vt100.faceName: JetBrains Mono
+XTerm.vt100.faceSize: 12.5
+XTerm.utf8: 1
+XTerm.vt100.locale: true
+
+! XTERM COPY/PASTE
+! !------------------------------------------------
+XTerm.selectToClipboard: true
+XTerm.highlightSelection: true
+XTerm.trimSelection: true
+
+! XTERM SHELL
+! !------------------------------------------------
+XTerm*shell: /usr/bin/zsh
+
+! XTERM SCREEN BUFFER & SCROLLING
+! !------------------------------------------------
+XTerm.scrollTtyOutput: false
+XTerm.saveLines: 0
+XTerm*titeInhibit: false
+XTerm*alternateScroll: true
+XTerm*allowScrollLock: true
+XTerm*allowTitleOps: true
+XTerm*eraseSavedLines: true
+XTerm*clearPasswd: true
+
+! XTERM CURSOR & POINTER
+! !------------------------------------------------
+XTerm.pointerColor: green
+XTerm.pointerColorBackground: black
+XTerm.cursorColor: yellow
+XTerm.cursorBlink: true
+XTerm.vt100.scrollBar: false
+
+! XTERM WINDOW OPERATIONS
+! !------------------------------------------------
+XTerm*vt100.allowWindowOps: true
+
+! XTERM KEYBINDINGS
+! !------------------------------------------------
+XTerm.vt100.translations: #override \n\
+    Ctrl <Key>-: smaller-vt-font() \n\
+    Ctrl <Key>+: larger-vt-font() \n\
+    Ctrl <Key>0: set-vt-font(d) \n\
+    Ctrl Alt <Key>c: copy-selection(CLIPBOARD) \n\
+    Ctrl Alt <Key>v: insert-selection(CLIPBOARD)
