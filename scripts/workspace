@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Define the log file
 LOG_FILE="/tmp/i3.log"
 
-# Clear the log file if it already exists
 >$LOG_FILE
 
-# Function to log commands and their output
 log_command() {
   echo "Executing: $1" >>$LOG_FILE
   eval "$1" >>$LOG_FILE 2>&1
@@ -14,15 +11,54 @@ log_command() {
   echo "-----------------------" >>$LOG_FILE
 }
 
-# Execute commands and log their output
-log_command "i3-msg 'workspace 6; exec firefox'"
-sleep 0.3
-log_command "i3-msg 'workspace 7; exec alacritty -e bash -c \"cd ~/projects/class-time-projects\"'"
-sleep 0.3
-log_command "i3-msg 'workspace 8; exec alacritty -e bash -c \"cd ~/projects/class-time-projects\"'"
-sleep 0.3
+check_internet() {
+  for i in {1..20}; do # Try for 30 seconds
+    if ping -c 1 8.8.8.8 >/dev/null 2>&1; then
+      echo "Internet connection established" >>$LOG_FILE
+      return 0
+    fi
+    sleep 1
+  done
+  echo "No internet connection after 30 seconds" >>$LOG_FILE
+  return 1
+}
+
+wait_for_window() {
+  local class=$1
+  local timeout=$2
+  local counter=0
+
+  while [ $counter -lt $timeout ]; do
+    if xdotool search --onlyvisible --class "$class" >/dev/null 2>&1; then
+      return 0
+    fi
+    sleep 1
+    counter=$((counter + 1))
+  done
+  return 1
+}
+
+# Check for internet connection first
+check_internet
+log_command "i3-msg 'workspace 7; exec xterm'"
+sleep 1
 log_command "i3-msg 'workspace 9; exec firefox'"
-sleep 0.3
-log_command "i3-msg 'workspace 10; exec alacritty'"
-sleep 0.3
-log_command "i3-msg 'workspace 1; exec firefox'"
+sleep 1
+log_command "i3-msg 'workspace 6; exec firefox --new-window https://app.100xdevs.com'"
+sleep 1
+
+# Workspace 1 - Timer
+log_command "i3-msg 'workspace 1; exec firefox --new-window  https://www.google.com/'"
+
+# Wait for Firefox window to appear and set the timer
+if wait_for_window "firefox" 10; then
+  sleep 1
+  xdotool search --onlyvisible --class firefox windowactivate --sync
+  sleep 0.5
+  xdotool type 'timer 6 hour and 5 minute'
+  xdotool key Return
+else
+  echo "Failed to find Firefox window for timer" >>$LOG_FILE
+fi
+
+log_command "i3-msg 'workspace 1'"
