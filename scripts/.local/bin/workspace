@@ -41,16 +41,14 @@ wait_for_window() {
 # Check for internet connection first
 check_internet
 log_command "i3-msg 'workspace 7; exec xterm'"
-sleep 1
+sleep 0.5
 log_command "i3-msg 'workspace 9; exec firefox'"
 sleep 1
 log_command "i3-msg 'workspace 6; exec firefox --new-window https://app.100xdevs.com'"
 sleep 1
 
-# Workspace 1 - Timer
 log_command "i3-msg 'workspace 1; exec firefox --new-window  https://www.google.com/'"
 
-# Wait for Firefox window to appear and set the timer
 if wait_for_window "firefox" 10; then
   sleep 1
   xdotool search --onlyvisible --class firefox windowactivate --sync

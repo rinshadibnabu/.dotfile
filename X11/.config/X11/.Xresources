@@ -16,6 +16,7 @@ XTerm.vt100.faceSize: 12.5
 XTerm.utf8: 1
 XTerm.vt100.locale: true
 
+XTerm*fastScroll: false
 ! XTERM COPY/PASTE
 ! !------------------------------------------------
 XTerm.selectToClipboard: true
@@ -28,8 +29,9 @@ XTerm*shell: /usr/bin/zsh
 
 ! XTERM SCREEN BUFFER & SCROLLING
 ! !------------------------------------------------
-XTerm.scrollTtyOutput: false
-XTerm.saveLines: 0
+XTerm.scrollTtyOutput: true
+XTerm.saveLines: 10000
+XTerm*scrollTtyKeypress: true
 XTerm*titeInhibit: false
 XTerm*alternateScroll: true
 XTerm*allowScrollLock: true
