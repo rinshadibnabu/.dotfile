@@ -32,6 +32,7 @@ print_status "Enabling and starting the battery notification timer..."
 systemctl --user enable battery-notification.timer
 systemctl --user start battery-notification.timer
 
+cd
 source .zshrc
 
 print_status "Setup complete!"

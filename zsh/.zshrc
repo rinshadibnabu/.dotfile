@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/rinshad/.zsh/completions:"* ]]; then export FPATH="/home/rinshad/.zsh/completions:$FPATH"; fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -139,12 +141,18 @@ alias dprune='docker system prune -a'
 
 alias ..='cd ..'
 alias ...='cd ../..'
-alias la='ls -lar'
+alias la='ls -lahtr'
 alias lh='ls -lah'
 alias home='cd ~'
 alias root='cd /'
 alias desk='cd ~/Desktop'
 alias docs='cd ~/Documents'
-alias ll='ls -lhtr'
+alias l='ls -lhtr'
+alias rdf='rm -rf'
 
 
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "/home/rinshad/.deno/env"

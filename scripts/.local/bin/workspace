@@ -1,7 +1,5 @@
 #!/bin/bash
-
 LOG_FILE="/tmp/i3.log"
-
 >$LOG_FILE
 
 log_command() {
@@ -23,40 +21,13 @@ check_internet() {
   return 1
 }
 
-wait_for_window() {
-  local class=$1
-  local timeout=$2
-  local counter=0
-
-  while [ $counter -lt $timeout ]; do
-    if xdotool search --onlyvisible --class "$class" >/dev/null 2>&1; then
-      return 0
-    fi
-    sleep 1
-    counter=$((counter + 1))
-  done
-  return 1
-}
-
-# Check for internet connection first
 check_internet
-log_command "i3-msg 'workspace 7; exec xterm'"
-sleep 0.5
-log_command "i3-msg 'workspace 9; exec firefox'"
-sleep 1
-log_command "i3-msg 'workspace 6; exec firefox --new-window https://app.100xdevs.com'"
-sleep 1
 
-log_command "i3-msg 'workspace 1; exec firefox --new-window  https://www.google.com/'"
+log_command "i3-msg 'workspace 6; exec firefox --new-window https://app.100xdevs.com/courses/3/245/246'"
 
-if wait_for_window "firefox" 10; then
-  sleep 1
-  xdotool search --onlyvisible --class firefox windowactivate --sync
-  sleep 0.5
-  xdotool type 'timer 6 hour and 5 minute'
-  xdotool key Return
-else
-  echo "Failed to find Firefox window for timer" >>$LOG_FILE
-fi
+log_command "i3-msg 'workspace 7; exec ghostty '"
+sleep 1 # Wait for the tmux server to initialize
+log_command "i3-msg 'workspace 7; exec tmux"
+log_command "i3-msg 'workspace 7; exec ~/.config/tmux/plugins/tmux-resurrect/scripts/./restore.sh'"
 
-log_command "i3-msg 'workspace 1'"
+log_command "i3-msg 'workspace 7'"
