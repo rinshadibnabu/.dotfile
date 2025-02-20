@@ -17,25 +17,29 @@ order += "memory"
 order += "tztime local"
 
 wireless _first_ {
-        format_up = "W: (%quality at %essid)"
+        format_up = "W: (%quality at %essid)     "
         format_down = "W: down"
+        separator = false
 }
 
 battery all {
-        format = "%status %percentage %remaining"
-}
+        format = "%status %percentage %remaining "
+        separator = false
+        separator_block_width = 20
 
-disk "/" {
-        format = "%avail"
 }
 
 
 memory {
-        format = "%used | %available"
+        format = "%used  %available"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
-}
+        separator = false
+        separator_block_width = 20
+ }
 
 tztime local {
-        format = "%H:%M:%S"
+        format = "%H:%M:%S" 
+        min_width  = 40
+
 }
