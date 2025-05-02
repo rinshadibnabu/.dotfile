@@ -15,7 +15,7 @@ print_error() {
 
 # Install stow if not present
 install_stow() {
-  if ! command -v stow &> /dev/null; then
+  if ! command -v stow &>/dev/null; then
     print_status "Installing stow..."
     if [ -f /etc/arch-release ]; then
       sudo pacman -S --noconfirm stow
@@ -58,6 +58,21 @@ backup_existing_files() {
   done
 }
 
+clean_conflicts() {
+  for dir in */; do
+    dir=${dir%/}
+    cd "$dir"
+    for file in $(find . -type f); do
+      target="$HOME/${file#./}"
+      if [ -f "$target" ] && [ ! -L "$target" ]; then
+        print_status "Removing regular file: $target"
+        rm "$target"
+      fi
+    done
+    cd ..
+  done
+}
+
 link_dotfiles() {
   for dir in */; do
     dir=${dir%/}
@@ -69,10 +84,10 @@ link_dotfiles() {
 main() {
   install_stow
   # install_packages
+  clean_conflicts
   backup_existing_files
   link_dotfiles
   print_status "Dotfiles bootstrapped successfully!"
 }
 
 main "$@"
-
