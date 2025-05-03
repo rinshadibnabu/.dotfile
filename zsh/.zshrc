@@ -34,7 +34,7 @@ ZSH_THEME="robbyrussell"
 # zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+ DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -62,7 +62,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -117,11 +117,11 @@ alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
-alias gl='git pull'
+alias gpl='git pull'
 alias gd='git diff'
 alias gco='git checkout'
 alias gb='git branch'
-alias glog='git log --oneline --graph'
+alias gl='git log --oneline --graph'
 
 alias d='docker'
 alias dc='docker-compose'
@@ -152,7 +152,4 @@ alias rdf='rm -rf'
 
 
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "/home/rinshad/.deno/env"
+
