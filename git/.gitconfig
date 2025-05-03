@@ -1,6 +1,6 @@
 [user]
-	name = Rinshad-parancheri
-	email = rinshadp014@gmail.com
+	name = rinshadibnabu
+	email = rinshadpibnabu@gmail.com
 [alias]
     gs    = status
     a    = !git add . && git status
