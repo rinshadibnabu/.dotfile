@@ -65,7 +65,8 @@ assign [class="Thunar"] $ws7
 assign [class="Code"] $ws8
 assign [class="Vlc"] $ws9
 
-exec --no-startup-id i3-msg "workspace $ws2; exec brave"
+
+exec --no-startup-id i3-msg 'workspace 2; exec brave --disable-session-crashed-bubble --start-fullscreen'
 exec --no-startup-id i3-msg "workspace $ws3; exec ghostty -e tmux"
 
 # start dmenu (a program launcher)

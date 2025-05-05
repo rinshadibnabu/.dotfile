@@ -121,7 +121,7 @@ alias gpl='git pull'
 alias gd='git diff'
 alias gco='git checkout'
 alias gb='git branch'
-alias gl='git log --oneline --graph'
+alias gl='git log  --graph'
 
 alias d='docker'
 alias dc='docker-compose'
