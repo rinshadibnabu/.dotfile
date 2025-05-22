@@ -13,7 +13,6 @@ last_battery_line=$(echo "$battery_info" | grep -E 'Charging|Discharging' | tail
 
 state=$(echo "$last_battery_line" | grep -oE 'Charging|Discharging')
 percentage=$(echo "$last_battery_line" | grep -oE '[0-9]+%' | tr -d '%')
-echo "this is working "
 notify() {
   local urgency="$1"
   local title="$2"

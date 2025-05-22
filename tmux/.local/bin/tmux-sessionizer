@@ -1,25 +1,74 @@
 #!/usr/bin/env bash
+set -x # Enable bash debug output (show each command)
 
+# Function to create windows and set up session
+setup_session() {
+  local session_name=$1
+  local dir=$2
+
+  # Create session with first window running nvim in directory root
+  tmux new-session -ds "$session_name" -c "$dir" "nvim ."
+
+  # Create second window with terminal at directory root
+  tmux new-window -t "$session_name" -c "$dir"
+  tmux rename-window -t "$session_name:1" "terminal"
+
+  # Create third window with terminal at directory root
+  tmux new-window -t "$session_name" -c "$dir"
+  tmux rename-window -t "$session_name:2" "terminal2"
+
+  # Select the first window (nvim)
+  tmux select-window -t "$session_name:0"
+}
+
+# Handle input - either use argument or run fzf
 if [[ $# -eq 1 ]]; then
-    selected=$1
+  if [[ -d "$1" ]]; then
+    # If argument is a directory, use it directly
+    selected_dir="$1"
+  else
+    # If argument is a file, get its directory
+    selected_dir=$(dirname "$1")
+  fi
 else
-    selected=$(find ~/work/builds ~/projects ~/ ~/work ~/personal ~/personal/yt -mindepth 1 -maxdepth 1 -type d | fzf)
+  echo "Running fd to select a directory..."
+  # Modified to select directories instead of files
+  selected_dir=$(fd --type d --hidden \
+    --exclude .git \
+    --exclude node_modules \
+    --exclude .next \
+    --exclude dist \
+    --exclude .turbo \
+    --exclude docs \
+    . "$HOME" | fzf)
 fi
 
-if [[ -z $selected ]]; then
-    exit 0
+echo "Selected directory: '$selected_dir'"
+if [[ -z "$selected_dir" ]]; then
+  echo "No directory selected."
+  if [[ -n "$TMUX" ]]; then
+    last_session=$(tmux display-message -p '#S')
+    tmux switch-client -t "$last_session"
+  fi
+  exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
+# Create session name from directory name
+session_name=$(basename "$selected_dir" | tr . _)
+echo "Session name: $session_name"
+echo "Session directory: $selected_dir"
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
-    exit 0
+# Check if session exists, create if not
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+  echo "Creating new tmux session: $session_name"
+  setup_session "$session_name" "$selected_dir"
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-fi
-
-tmux switch-client -t $selected_name
+# Attach or switch to session
+if [[ -n "$TMUX" ]]; then
+  echo "Inside tmux, switching client"
+  tmux switch-client -t "$session_name"
+else
+  echo "Outside tmux, attaching session"
+  tmux attach-session -t "$session_name"
+f

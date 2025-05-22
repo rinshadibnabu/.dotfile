@@ -48,27 +48,27 @@ exec --no-startup-id dunst
 
 # User applications
 exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper/wallpaper.jpg
-exec --no-startup-id bash -c "until ping -c1 google.com >/dev/null 2>&1; do sleep 1; done && i3-msg 'workspace 2; exec zen-browser --kiosk'"
-exec --no-startup-id i3-msg "workspace $ws3; exec ghostty e tmux"
+exec --no-startup-id bash -c "until ping -c1 google.com >/dev/null 2>&1; do sleep 1; done && i3-msg 'workspace 2; exec brave'"
+exec --no-startup-id i3-msg "workspace $ws3; exec ghostty -e tmux"
 
 ###########################################
 # WINDOW ASSIGNMENTS AND RULES
 ###########################################
 
 # Workspace assignments
-assign [class="Chromium"] $ws10
 assign [class="com.github.johnfactotum.Foliate"] $ws1
-assign [class="zen"] $ws2
+assign [class="Brave"] $ws2
 assign [class="ghostty"] $ws3
-assign [class="Brave"] $ws4
-assign [class="TelegramDesktop"] $ws5
+assign [class="Chromium"] $ws10
+assign [class="Virt-manager"] $ws5
 assign [class="Postman"] $ws6
 assign [class="Thunar"] $ws7
-assign [class="Code"] $ws8
+assign [class="code-oss"] $ws8
 assign [class="Vlc"] $ws9
+assign [class="Protonvpn-app"] $ws5
 
 # Window-specific rules
-for_window [class="zen"] fullscreen enable
+for_window [class="Brave"] fullscreen enable
 for_window [class="ghostty"] fullscreen enable
 
 ###########################################

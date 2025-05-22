@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 /bin/npm create vite@latest frontend -- --template react-ts >/tmp/new.log || {
   echo "Failed to create Vite project"
