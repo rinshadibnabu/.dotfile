@@ -59,13 +59,13 @@ exec --no-startup-id i3-msg "workspace $ws3; exec ghostty -e tmux"
 assign [class="com.github.johnfactotum.Foliate"] $ws1
 assign [class="Brave"] $ws2
 assign [class="ghostty"] $ws3
+assign [class="Protonvpn-app"] $ws5
 assign [class="Chromium"] $ws10
-assign [class="Virt-manager"] $ws5
 assign [class="Postman"] $ws6
 assign [class="Thunar"] $ws7
-assign [class="code-oss"] $ws8
-assign [class="Vlc"] $ws9
-assign [class="Protonvpn-app"] $ws5
+assign [class="code-oss"] $ws4
+assign [class="TelegramDesktop"] $ws8
+assign [class="vlc"] $ws9
 
 # Window-specific rules
 for_window [class="Brave"] fullscreen enable
