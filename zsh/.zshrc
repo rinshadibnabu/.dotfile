@@ -150,8 +150,9 @@ alias docs='cd ~/Documents'
 alias l='ls -lhtr'
 alias rdf='rm -rf'
 
+alias c='clear'
 
 
-
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+
+
