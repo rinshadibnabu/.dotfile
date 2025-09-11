@@ -1,0 +1,134 @@
+# =============================================
+# Alacritty Configuration — Nord Theme + JetBrains Mono
+# Fixed for Alacritty v0.13+ (no warnings/errors)
+# =============================================
+
+# ----------------------------
+# ENVIRONMENT
+# ----------------------------
+[env]
+TERM = "xterm-256color"
+
+# ----------------------------
+# GENERAL SETTINGS
+# ----------------------------
+[general]
+live_config_reload = true  # Reload with Ctrl+Shift+R
+
+# ----------------------------
+# WINDOW & OPACITY
+# ----------------------------
+[window]
+opacity = 0.88
+decorations = "none"
+startup_mode = "Windowed"
+
+[window.padding]
+x = 10
+y = 10
+
+# ----------------------------
+# FONT — JetBrains Mono (Fixed!)
+# ----------------------------
+
+[font]
+size = 11.0
+normal      = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold        = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic      = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+
+builtin_box_drawing = true
+# ✅ CORRECT WAY to set glyph offsets (if needed — usually leave at 0)
+[font.offset]
+x = 0
+y = 0
+
+# ----------------------------
+# FEATURES — VI MODE
+# ----------------------------
+# [features]
+# vi_mode = true
+#
+# ----------------------------
+# COLORS — Nord Theme
+# ----------------------------
+[colors.primary]
+background = "#2e3440"
+foreground = "#d8dee9"
+dim_foreground = "#a5abb6"
+
+[colors.cursor]
+text = "#2e3440"
+cursor = "#d8dee9"
+
+[colors.vi_mode_cursor]
+text = "#2e3440"
+cursor = "#88c0d0"
+
+[colors.selection]
+text = "CellForeground"
+background = "#4c566a"
+
+[colors.search.matches]
+foreground = "CellBackground"
+background = "#88c0d0"
+
+
+[colors.footer_bar]
+background = "#434c5e"
+foreground = "#eceff4"
+
+[colors.normal]
+black   = "#3b4252"
+red     = "#bf616a"
+green   = "#a3be8c"
+yellow  = "#ebcb8b"
+blue    = "#81a1c1"
+magenta = "#b48ead"
+cyan    = "#88c0d0"
+white   = "#e5e9f0"
+
+[colors.bright]
+black   = "#4c566a"
+red     = "#bf616a"
+green   = "#a3be8c"
+yellow  = "#ebcb8b"
+blue    = "#81a1c1"
+magenta = "#b48ead"
+cyan    = "#8fbcbb"
+white   = "#eceff4"
+
+[colors.dim]
+black   = "#373e4d"
+red     = "#94545d"
+green   = "#809575"
+yellow  = "#b29e75"
+blue    = "#68809a"
+magenta = "#8c738c"
+cyan    = "#6d96a5"
+white   = "#aeb3bb"
+
+# ----------------------------
+# SCROLLING & CURSOR
+# ----------------------------
+[scrolling]
+history = 10000
+multiplier = 3
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+
+[keyboard]
+bindings = [
+  { key = "V", mods = "Control|Shift", action = "ToggleViMode" },
+  { key = "Y", mods = "Control", action = "Copy" },
+  { key = "P", mods = "Control", action = "Paste" }
+]
+# ----------------------------
+# SELECTION → CLIPBOARD
+# ----------------------------
+[selection]
+save_to_clipboard = true

@@ -2,7 +2,13 @@
 Description=Creates Notification when battery is below safe level.
 
 [Service]
-ExecStart=/home/rinshad/.local/bin/battery
+Type=oneshot
+ExecStart=/home/r5d/.local/bin/battery
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=WAYLAND_DISPLAY=wayland-0
+StandardOutput=null
+StandardError=null
+SyslogIdentifier=
 
 [Install]
-WantedBy=default.target
+WantedBy=default.targe
