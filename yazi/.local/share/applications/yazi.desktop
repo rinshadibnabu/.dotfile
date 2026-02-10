@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Yazi
+Comment=Terminal file manager
+Exec=alacritty --class yazi -e yazi
+Icon=yazi
+Terminal=false
+Type=Application
+Categories=System;FileManager;
+

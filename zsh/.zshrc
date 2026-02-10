@@ -1,179 +1,57 @@
-# =============================================================================
-# MINIMAL OH-MY-ZSH STYLE CONFIGURATION (NO OH-MY-ZSH)
-# =============================================================================
-# Only loads essential plugins and core features
-# =============================================================================
 
-# -----------------------------------------------------------------------------
-# ESSENTIAL PATHS & ENVIRONMENT
-# -----------------------------------------------------------------------------
+# Minimal .zshrc (interactive only)
+[[ $- != *i* ]] && return
+
+# Basics
 export EDITOR='nvim'
 export LANG=en_US.UTF-8
-export ARCHFLAGS="-arch $(uname -m)"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Deno completions
-export FPATH="$HOME/.zsh/completions:$FPATH"
-
-# -----------------------------------------------------------------------------
-# ZSH CORE SETTINGS
-# -----------------------------------------------------------------------------
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_VERIFY
-setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 
-# Core behaviors
-setopt AUTO_CD
-setopt CORRECT
-setopt PROMPT_SUBST
-DISABLE_MAGIC_FUNCTIONS="true"
+# Optional starship (quiet if not installed)
+eval "$(starship init zsh 2>/dev/null || true)"
 
-# -----------------------------------------------------------------------------
-# MODERN PROMPT (STARSHIP)
-# -----------------------------------------------------------------------------
-eval "$(starship init zsh)"
+# (Optional) FZF defaults — tweak if you like
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border --prompt="History> "'
 
-# -----------------------------------------------------------------------------
-# SMART COMPLETION SYSTEM
-# -----------------------------------------------------------------------------
-autoload -Uz compinit
-if [ $(date +'%s') -gt $(( $(stat -Lc %Y $ZSH_COMPDUMP) + 20 )) ]; then
-  compinit -i
-else
-  compinit -C -i
-fi
-
-# Completion styles
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-
-# -----------------------------------------------------------------------------
-# ESSENTIAL PLUGINS (MANUAL INSTALL)
-# -----------------------------------------------------------------------------
-# Install these manually in ~/.zsh/plugins:
-#   git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/plugins/zsh-autosuggestions
-#   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
-#   git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.zsh/plugins/zsh-history-substring-search
-
-# Load only what we need
-for plugin in ~/.zsh/plugins/*/*.zsh(N); do
-  source $plugin
-done
-
-# -----------------------------------------------------------------------------
-# SMARTER PROCESS KILLER (FK)
-# -----------------------------------------------------------------------------
-fk() {
-  local pid
-  pid=$(ps -o pid,comm --sort=-%cpu \
-    | sed 1d \
-    | fzf --height 40% --reverse --border \
-          --header="PID | COMMAND (↑↓ navigate, Enter kill, ESC cancel)" \
-          --preview='echo "PID: {1}"; echo "COMMAND: {2..}"; echo; echo "Full command:"; ps -fp {1}' \
-          --preview-window=down:3:wrap \
-          --bind="ctrl-k:kill-line" \
-          --prompt="Kill > " \
-    | awk '{print $1}')
-
-  if [[ -n "$pid" ]]; then
-    echo "Killing PID $pid..."
-    kill -TERM "$pid" 2>/dev/null || kill -KILL "$pid"
-  else
-    echo "No process selected."
+# Clean Ctrl-R → fzf search (no previews / no markings)
+fzf_history_widget() {
+  local selected
+  # fc -rl 1 : full history reversed; sed removes leading numbers
+  selected=$(fc -rl 1 2>/dev/null | sed -E 's/^[[:space:]]*[0-9]+\s+//' | fzf --height 40% --reverse --border --prompt='History> ')
+  if [[ -n $selected ]]; then
+    BUFFER=$selected
+    CURSOR=${#BUFFER}
+    zle redisplay
   fi
 }
+zle -N fzf_history_widget
+bindkey '^R' fzf_history_widget
 
-# -----------------------------------------------------------------------------
-# ESSENTIAL ALIASES (OH-MY-ZSH STYLE)
-# -----------------------------------------------------------------------------
-# Navigation
-alias -g ...='../..'
-alias -g ....='../../..'
-alias -g .....='../../../..'
-alias -g ~='cd ~'         # `~` - go home
-
-# Listing
-alias l='ls -lhtr --color=auto'
-alias la='ls -lahtr --color=auto'
+# Small useful aliases
 alias ll='ls -lhF --color=auto'
-
-# Git (most used)
+alias la='ls -lahtr --color=auto'
 alias g='git'
-alias gs='git status -sb'
-alias ga='git add'
-alias gc='git commit -m'
-alias gp='git push'
-alias gpl='git pull'
-alias gd='git diff'
-alias gco='git checkout'
-
-# System
 alias c='clear'
-alias h='history | fzf'
-alias j='jobs -l'
-alias path='echo -e ${PATH//:/\\n}'
-alias reload='source ~/.zshrc'
 
-# Process
-alias fk=fk  # Our improved process killer
-alias psg='ps aux | fzf'
-
-# -----------------------------------------------------------------------------
-# MINIMAL FUNCTIONS
-# -----------------------------------------------------------------------------
-# Create dir and cd
-mkcd() { mkdir -p "$1" && cd "$1"; }
-
-# Extract archives
-extract() {
-  local file=$1
-  [[ -f $file ]] || { echo "Not a valid file"; return 1 }
-  
-  case $file in
-    *.tar.bz2) tar xjf "$file" ;;
-    *.tar.gz)  tar xzf "$file" ;;
-    *.zip)     unzip "$file"   ;;
-    *.rar)     unrar x "$file" ;;
-    *.7z)      7z x "$file"    ;;
-    *) echo "Unsupported archive"; return 1 ;;
-  esac
-}
-
-# -----------------------------------------------------------------------------
-# KEY BINDINGS
-# -----------------------------------------------------------------------------
-# History search with substring
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-# Word movement
-bindkey '^[[1;5C' forward-word
-bindkey '^[[1;5D' backward-word
-
-# -----------------------------------------------------------------------------
-# FZF INTEGRATION
-# -----------------------------------------------------------------------------
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border --info=inline'
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-
-# Load fzf keybindings
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-
-# -----------------------------------------------------------------------------
-# LOCAL CUSTOMIZATIONS
-# -----------------------------------------------------------------------------
+# Load local tweaks if present
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# Completion system
+autoload -Uz compinit
+compinit -i
+
+
+# Show all processes (not just current user)
+zstyle ':completion:*:*:kill:*:processes' command \
+  'ps -A -o pid,cmd -w -w'
+

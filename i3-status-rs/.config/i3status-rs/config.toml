@@ -11,6 +11,7 @@ max_vol = 100
 [[block]]
 block = "battery"
 format = " $icon $percentage "
+full_threshold = 80
 
 [[block]]
 block = "backlight"

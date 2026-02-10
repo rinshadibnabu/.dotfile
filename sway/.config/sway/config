@@ -4,6 +4,7 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+    font pango:JetBrainsMono Nerd Font 10
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -20,15 +21,15 @@ set $menu fuzzel
 # Window-specific rules
 ### Output configuration
 #
-set $w1 workspace number 1 
-set $w2 workspace number 2 
-set $w3 workspace number 3 
-set $w4 workspace number 4 
-set $w5 workspace number 5 
-set $w6 workspace number 6 
-set $w7 workspace number 7 
-set $w8 workspace number 8 
-set $w9 workspace number 9 
+set $w1 workspace number 1
+set $w2 workspace number 2
+set $w3 workspace number 3
+set $w4 workspace number 4
+set $w5 workspace number 5
+set $w6 workspace number 6
+set $w7 workspace number 7
+set $w8 workspace number 8
+set $w9 workspace number 9
 set $w10 workspace number 10
 
 
@@ -53,8 +54,8 @@ exec swayidle -w \
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
-exec --no-startup-id bash -c "timeout 60 bash -c 'until ping -c1 google.com >/dev/null 2>&1; do sleep 1; done' && swaymsg 'workspace 2; exec zen-browser'"
-exec --no-startup-id swaymsg "workspace  3; exec Alacritty -e tmux"
+exec --no-startup-id zsh -c "timeout 60 bash -c 'until ping -c1 google.com >/dev/null 2>&1; do sleep 1; done' && swaymsg 'workspace 2; exec zen-browser'"
+exec --no-startup-id zsh -c 'sleep 1 && swaymsg "workspace 3" && exec alacritty -e tmux'
 ### Input configuration
 #
 # Example configuration:
@@ -155,19 +156,20 @@ exec --no-startup-id swaymsg "workspace  3; exec Alacritty -e tmux"
 ###########################################
 
 # Workspace assignments
-assign [app_id="com.github.johnfactotum.Foliate"] $w1  
+assign [class="obsidian"] $w1
+assign [app_id="chromium"] $w2
 assign [app_id="zen"] $w2
-assign [app_id="Alacritty"] $w3 
-assign [app_id="protonvpn-app"] $w4 
-assign [class="Chromium-browser"] $w5
-assign [class="Postman"]  $w6 
-assign [app_id="thunar"] $w7 
-assign [class="code-oss"] $w8 
-assign [app_id="org.telegram.desktop"] $w9
-assign [app_id="mpv"] $w10 
-
-
-
+assign [app_id="Alacritty"] $w3
+assign [app_id="yazi"] $w4
+assign [app_id="thunar"] $w4
+assign [class="code-oss"] $w5
+assign [app_id="com.obsproject.Studio"] $w6
+assign [app_id="com.github.johnfactotum.Foliate"] $w7
+assign [app_id="protonvpn-app"] $w10 
+assign [class="Tor Browser"] $w10
+assign [app_id="org.telegram.desktop"] $w10
+assign [app_id="mpv"] $w10
+assign [class="vlc"] $w10
 # Layout stuff:
 #
     # You can "split" the current object of your focus with
@@ -247,12 +249,13 @@ for_window [title=".*"] focus
 # Read `man 5 sway-bar` for more information about this section
 for_window [app_id="com.github.johnfactotum.Foliate"] opacity 0.8
 for_window [app_id="com.github.johnfactotum.Foliate"] blur enable
-for_window [app_id="zen"] opacity 0.8
-for_window [app_id="zen"] blur enable
+# for_window [app_id="zen"] opacity 0.8
+# for_window [app_id="zen"] blur enable
+for_window [app_id="zen"] border none
 bar {
     position top
-    status_command i3status-rs ~/.config/i3status-rust/config.toml
-    font pango:JetBrainsMono Nerd Font 11
+    status_command i3status-rs ~/.config/i3status-rs/config.toml
+    font pango:JetBrainsMono Nerd Font 10
     height 28
     colors {
         background #2e3440

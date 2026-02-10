@@ -45,8 +45,8 @@ notify() {
   if [ -f "$sound_file" ]; then
     if command -v paplay &>/dev/null; then
       paplay "$sound_file" >/dev/null 2>&1
-    elif command -v aplay &>/dev/null; then
-      aplay "$sound_file" >/dev/null 2>&1
+    elif command -v paplay &>/dev/null; then
+      paplay "$sound_file" >/dev/null 2>&1
     elif command -v mpv &>/dev/null; then
       mpv --no-video --really-quiet "$sound_file" >/dev/null 2>&1
     else
