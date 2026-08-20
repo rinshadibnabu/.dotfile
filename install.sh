@@ -29,18 +29,18 @@ install_stow() {
 }
 
 # Optional package installation
-install_packages() {
-  if [ -f packages.txt ]; then
-    print_status "Installing packages from packages.txt..."
-    if [ -f /etc/arch-release ]; then
-      sudo pacman -S --noconfirm $(<packages.txt)
-    elif [ -f /etc/debian_version ]; then
-      sudo apt update && sudo apt install -y $(<packages.txt)
-    else
-      print_error "Unsupported OS. Install packages manually."
-    fi
-  fi
-}
+# # install_packages() {
+#   if [ -f packages.txt ]; then
+#     print_status "Installing packages from packages.txt..."
+#     if [ -f /etc/arch-release ]; then
+#       sudo pacman -S --noconfirm $(<packages.txt)
+#     elif [ -f /etc/debian_version ]; then
+#       sudo apt update && sudo apt install -y $(<packages.txt)
+#     else
+#       print_error "Unsupported OS. Install packages manually."
+#     fi
+#   fi
+# }
 
 backup_existing_files() {
   for dir in */; do

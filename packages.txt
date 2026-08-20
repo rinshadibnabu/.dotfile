@@ -1,84 +1,27 @@
-acpi
-alsa-utils
-arc-gtk-theme
-arch-audit
-base
-base-devel
-bluez
-bluez-utils
-bridge-utils
-brightnessctl
-chromium
-dnsmasq
-docker
-dunst
-edk2-ovmf
-efibootmgr
-fd
-feh
-firefox
-foliate
-fzf
-gdu
-git
-grub
-gst-plugin-pipewire
-guestfs-tools
-hdparm
-htop
-i3-wm
-i3blocks
-i3lock
-i3status
-intel-ucode
-iptables-nft
-less
-libnotify
-libosinfo
-libpulse
-libvirt
-linux
-linux-firmware
-linux-headers
-maim
-mtools
-neovim
-networkmanager
-nodejs
-npm
-openbsd-netcat
-openssh
-os-prober
-picom
-pipewire
-pipewire-alsa
-pipewire-jack
-pipewire-pulse
-plocate
-qemu-full
-qemu-img
-redshift
-ripgrep
-rofi
-rtkit
-sof-firmware
-stow
-swtpm
-thunar
-tldr
-tmux
-tree
-ttf-jetbrains-mono-nerd
-ttf-nerd-fonts-symbols
-ttf-nerd-fonts-symbols-mono
-unzip
-vlc
-wireplumber
-xclip
-xdotool
-xorg-server
-xorg-xinit
-xorg-xinput
-xterm
-zram-generator
-zsh
+acpi 1.8-2
+alacritty 0.17.0-1
+base 3-3
+feh 3.12.2-1
+firefox 154.0-1
+fuzzel 1.14.1-2
+gdu 5.37.0-1
+grub 2:2.14-1
+i3status-rust 0.36.1-1
+intel-ucode 20260812-1
+linux-firmware-intel 20260810-2
+linux-firmware-realtek 20260810-2
+linux-lts 6.18.44-1
+maim 5.8.2-1
+pacman-contrib 1.13.1-1
+pkgfile 26-1
+polkit-kde-agent 6.7.4-1
+sof-firmware 2025.12.2-1
+stow 2.4.1-1
+sway 1:1.12-4
+thunar 4.20.9-1
+tlp 1.10.2-1
+tree 2.3.2-1
+ufw 0.36.2-7
+yay 13.0.1-1
+yay-debug 13.0.1-1
+yazi 26.5.6-4

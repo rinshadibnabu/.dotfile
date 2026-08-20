@@ -17,8 +17,6 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 
-# Optional starship (quiet if not installed)
-eval "$(starship init zsh 2>/dev/null || true)"
 
 # (Optional) FZF defaults — tweak if you like
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border --prompt="History> "'
