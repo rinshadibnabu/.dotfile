@@ -21,13 +21,7 @@ case ":$PATH:" in
 esac
 
 # Add npm global bin to PATH if it exists
-if [ -d "$HOME/.npm-global/bin" ]; then
-    export PATH="$HOME/.npm-global/bin:$PATH"
-fi
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
-. "/home/rinshad/.deno/env"
+
 
 # bun completions
 [ -s "/home/rinshad/.bun/_bun" ] && source "/home/rinshad/.bun/_bun"
