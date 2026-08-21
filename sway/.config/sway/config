@@ -47,7 +47,7 @@ output eDP-1 resolution 1920x1080 position 1920,0
 # Example configuration:
 #
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 200 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          before-sleep 'swaylock -f -c 000000'
 
@@ -166,7 +166,7 @@ assign [class="code-oss"] $w5
 assign [app_id="com.obsproject.Studio"] $w6
 assign [app_id="com.github.johnfactotum.Foliate"] $w7
 assign [app_id="protonvpn-app"] $w10 
-assign [class="Tor Browser"] $w10
+assign [class="Tor Browser"] $w11
 assign [app_id="org.telegram.desktop"] $w10
 assign [app_id="mpv"] $w10
 assign [class="vlc"] $w10
